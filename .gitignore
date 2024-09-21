@@ -1,0 +1,10 @@
+# Ignore the node_modules folder and build files in all subdirectories
+**/node_modules
+**/.next
+
+# Ignore .git folder if you're keeping the inner repos as well
+**/.git
+
+# Other project-specific files to ignore
+.DS_Store
+.env
