@@ -24,13 +24,17 @@ const ModeIndicator = memo(function ModeIndicator({ handPosition }) {
     <div style={{
       position: 'absolute',
       top: '20px',
-      right: '20px',
+      right: '50%',
       padding: '10px',
       backgroundColor: 'rgba(0, 0, 0, 0.5)',
       color: 'white',
       borderRadius: '5px',
       fontFamily: 'Arial, sans-serif',
-      fontSize: '16px'
+      fontSize: '16px',
+      textAlign: 'center',
+      alignItems: 'center',
+      justifyContent: 'center',
+      textSizeAdjust: '150%'
     }}>
       <div>Mode: {modeText}</div>
       {dataText && <div>{dataText}</div>}
