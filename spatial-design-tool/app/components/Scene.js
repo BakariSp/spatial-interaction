@@ -65,7 +65,6 @@ const Scene = memo(function Scene({ handPosition, selectedCube, setSelectedCube,
     scale: [scaleRef.current[color], scaleRef.current[color], scaleRef.current[color]],
   });
 
-  // Add a function to check if the cursor is over a cube
   const checkCursorOverCube = useCallback(() => {
     const raycaster = new THREE.Raycaster();
     const mouse = new THREE.Vector2(

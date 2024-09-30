@@ -1,3 +1,4 @@
+'use client'
 import React, { useRef } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { OrbitControls, Grid } from '@react-three/drei';
@@ -46,7 +47,7 @@ function Plane() {
 
 const Test2 = () => {
   return (
-    <div style={{ width: '100vw', height: '100vh', overflow: 'hidden' }}>
+    <div className={styles.container}>
       <Canvas camera={{ position: [0, 2, 5] }}>
         <ambientLight intensity={0.5} />
         <pointLight position={[10, 10, 10]} />

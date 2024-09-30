@@ -1,0 +1,46 @@
+/* spatial-design-tool/app/components/WorldBuild/handsIndicator.css */
+
+.hands-indicator-container {
+  display: flex;
+  justify-content: flex-start;
+  width: 300px; /* Adjust the width as needed */
+  background-color: rgba(0, 0, 0, 0.7);
+  color: #ffffff;
+  padding: 16px;
+  border-radius: 8px;
+  font-family: Arial, sans-serif;
+}
+
+.indicator-left, .indicator-right {
+  width: 55%; /* Adjust the width as needed */
+}
+
+.indicator-left h2 {
+  margin-bottom: 12px;
+  font-size: 1.2em;
+}
+
+.counts p {
+  margin: 4px 0;
+}
+
+.hand-type-info, .face-info {
+  margin-bottom: 12px;
+}
+
+.hand-type-info h4, .face-info h4 {
+  margin-bottom: 8px;
+  font-size: 1em;
+}
+
+.hand-details, .face-details {
+  background-color: rgba(255, 255, 255, 0.1);
+  padding: 8px;
+  border-radius: 4px;
+  margin-bottom: 4px;
+}
+
+.hand-details p, .face-details p {
+  margin: 2px 0;
+  font-size: 0.9em;
+}

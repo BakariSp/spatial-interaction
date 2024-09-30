@@ -1,10 +1,10 @@
 "use client";
 import { Canvas } from "@react-three/fiber";
 import { useState, useCallback, useEffect } from "react";
-import Scene from "./components/Scene.js";
-import HandTracker from "./components/HandTracker.js";
-import ModeIndicator from "./components/ModeIndicator.js";
-import CustomCursor from "./components/CustomCursor.js";
+import Scene from "../components/Scene.js";
+import HandTracker from "../components/HandTracker.js";
+import ModeIndicator from "../components/ModeIndicator.js";
+import CustomCursor from "../components/CustomCursor.js";
 
 export default function Home() {
   const [handPosition, setHandPosition] = useState(null);
