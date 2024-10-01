@@ -2,7 +2,7 @@
 import { Canvas } from "@react-three/fiber";
 import { useState, useCallback, useEffect } from "react";
 import Scene from "../components/Scene.js";
-import HandTracker from "../components/HandTracker.js";
+import HandTracker from "../components/WorldBuild/handsTracker.js/index.js";
 import ModeIndicator from "../components/ModeIndicator.js";
 import CustomCursor from "../components/CustomCursor.js";
 

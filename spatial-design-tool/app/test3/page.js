@@ -1,8 +1,8 @@
 "use client";
 import { useState, useCallback, useEffect } from "react";
 import WorldBuild from "../components/WorldBuild";
-import HandTracker from "../components/HandTracker";
-import ModeIndicator from "../components/ModeIndicator";
+import HandTracker from "../components/WorldBuild/handsTracker";
+import ModeIndicator from "../components/WorldBuild/ModeIndicator";
 import CustomCursor from "../components/CustomCursor";
 import HandsIndicator from "../components/WorldBuild/handsIndicator";
 
@@ -10,7 +10,7 @@ export default function Home() {
   const [handPosition, setHandPosition] = useState(null);
   const [selectedCube, setSelectedCube] = useState(null);
   const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
-  const [backgroundColor, setBackgroundColor] = useState('#000000');
+  const [backgroundColor, setBackgroundColor] = useState('#fff');
   const [isHover, setIsHover] = useState(false); // New state for hover
   const [handData, setHandData] = useState(null); // New state for hand data
 

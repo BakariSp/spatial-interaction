@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect, useMemo } from 'react';
+import React, { useRef, useState, useEffect, useMemo, useCallback } from 'react';
 import * as THREE from 'three';
 import GrassModel from './grassModel';
 
@@ -11,7 +11,7 @@ class CubeDate {
   }
 }
 
-const CubeArray = ({ size, cubeSize, selectState }) => {
+const CubeArray = React.memo(({ size, cubeSize, selectState }) => {
   const meshRefs = useRef([]);
   const [cubeData, setCubeData] = useState([]);
 
@@ -19,46 +19,46 @@ const CubeArray = ({ size, cubeSize, selectState }) => {
   const newMaterial = useMemo(() => new THREE.MeshBasicMaterial({ color: 0xff0000 }), []);
   const cubeGeometry = useMemo(() => new THREE.BoxGeometry(cubeSize, 0.1, cubeSize), [cubeSize]);
 
-  const getMaterialByName = (name) => {
+  const getMaterialByName = useCallback((name) => {
     return name === "newMaterial" ? newMaterial : defaultMaterial;
-  };
+  }, [newMaterial, defaultMaterial]);
 
-  // Load cube data from local storage or initialize it
   useEffect(() => {
     const storedCubeData = JSON.parse(localStorage.getItem('cubeData'));
     if (storedCubeData) {
-      const deserializedCubeData = storedCubeData.map(item => {
-        return new CubeDate(item.cubeSize, item.position, item.material, item.hasGrass);
-      });
-      setCubeData(deserializedCubeData);
+      setCubeData(storedCubeData.map(item => new CubeDate(item.cubeSize, item.position, item.material, item.hasGrass)));
     } else {
-      const initialCubeData = [];
-      for (let i = 0; i < size; i++) {
-        for (let j = 0; j < size; j++) {
-          initialCubeData.push(new CubeDate(cubeSize, [i, j], "default"));
+      const initialCubeData = useMemo(() => {
+        const data = [];
+        for (let i = 0; i < size; i++) {
+          for (let j = 0; j < size; j++) {
+            data.push(new CubeDate(cubeSize, [i, j], "default"));
+          }
         }
-      }
+        return data;
+      }, [size, cubeSize]);
+
       setCubeData(initialCubeData);
       localStorage.setItem('cubeData', JSON.stringify(initialCubeData));
     }
   }, [size, cubeSize]);
 
-  const selectCube = (index) => {
+  const selectCube = useCallback((index) => {
     if (meshRefs.current[index]) {
-      const updatedCubeData = [...cubeData];
-      if (updatedCubeData[index].hasGrass) {
-        // If the cube already has grass, remove it
-        updatedCubeData[index].material = "default";
-        updatedCubeData[index].hasGrass = false;
-      } else if (selectState) {
-        // If selectState is true and the cube doesn't have grass, add it
-        updatedCubeData[index].material = "newMaterial";
-        updatedCubeData[index].hasGrass = true;
-      }
-      setCubeData(updatedCubeData);
-      localStorage.setItem('cubeData', JSON.stringify(updatedCubeData));
+      setCubeData(prevData => {
+        const updatedCubeData = [...prevData];
+        if (updatedCubeData[index].hasGrass) {
+          updatedCubeData[index].material = "default";
+          updatedCubeData[index].hasGrass = false;
+        } else if (selectState) {
+          updatedCubeData[index].material = "newMaterial";
+          updatedCubeData[index].hasGrass = true;
+        }
+        localStorage.setItem('cubeData', JSON.stringify(updatedCubeData));
+        return updatedCubeData;
+      });
     }
-  };
+  }, [selectState]);
 
   return (
     <>
@@ -82,6 +82,7 @@ const CubeArray = ({ size, cubeSize, selectState }) => {
       )))}
     </>
   );
-};
+});
+
 
 export default CubeArray;

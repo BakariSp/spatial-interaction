@@ -1,44 +1,33 @@
 import * as THREE from "three";
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { OrthographicCamera, OrbitControls } from "@react-three/drei";
 import CubeArray from './CubeArray';
 
-const GameCanvas = ({ size, cubeSize, selectState, setSelectState, setPointersIndecator, cursorPosition, isHover }) => {
+const GameCanvas = React.memo(({ size, cubeSize, selectState, setSelectState, setPointersIndecator, cursorPosition, isHover }) => {
   const [isPointerDown, setIsPointerDown] = useState(false);
   const [isPointerEnter, setIsPointerEnter] = useState(false);
-  const boxMaterial = new THREE.MeshBasicMaterial({ opacity: 0.1, transparent: true, color: 0x00ff00 });
 
-  const handlePointerDown = () => {
-    setIsPointerDown(true);
-  };
+  const boxMaterial = useMemo(() => new THREE.MeshBasicMaterial({ opacity: 0.1, transparent: true, color: 0x00ff00 }), []);
 
-  const handlePointerUp = () => {
+  const handlePointerDown = useCallback(() => setIsPointerDown(true), []);
+  const handlePointerUp = useCallback(() => {
     setIsPointerDown(false);
     setSelectState(false);
-  };
-
-  const handlePointerEnter = () => {
-    setIsPointerEnter(true);
-  };
-
-  const handlePointerLeave = () => {
-    setIsPointerEnter(false);
-  };
+  }, [setSelectState]);
+  const handlePointerEnter = useCallback(() => setIsPointerEnter(true), []);
+  const handlePointerLeave = useCallback(() => setIsPointerEnter(false), []);
 
   useEffect(() => {
-    const checkPointerStatus = () => {
-      if (isPointerDown && isPointerEnter) {
-        setSelectState(true);
-      }
+    if (isPointerDown && isPointerEnter) {
+      setSelectState(true);
+    }
 
-      setPointersIndecator(
-        <>
-          <p>Pointer Down: {isPointerDown ? 'true' : 'false'}</p>
-          <p>Pointer Enter: {isPointerEnter ? 'true' : 'false'}</p>
-        </>
-      );
-    };
-    checkPointerStatus();
+    setPointersIndecator(
+      <>
+        <p>Pointer Down: {isPointerDown ? 'true' : 'false'}</p>
+        <p>Pointer Enter: {isPointerEnter ? 'true' : 'false'}</p>
+      </>
+    );
   }, [isPointerDown, isPointerEnter, setSelectState, setPointersIndecator]);
 
   useEffect(() => {
@@ -95,6 +84,7 @@ const GameCanvas = ({ size, cubeSize, selectState, setSelectState, setPointersIn
       />
     </>
   );
-};
+});
+
 
 export default GameCanvas;
